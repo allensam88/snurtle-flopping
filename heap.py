@@ -37,7 +37,7 @@ top3 = nlargest(3, qualifiers, key=qualifiers.get)
 # initialize winners list
 winners = []
 
-# populate winners list with top3 tuples
+# populate winners list from top3 names
 for name in top3:
     # create dict for single winners name and avg score
     winner = {}
