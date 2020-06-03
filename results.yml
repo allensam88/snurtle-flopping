@@ -1,10 +1,7 @@
 winners:
-- name: Laronda Bartell
-  avg: 80.625
-- name: Emeline Toy
-  avg: 78.07692307692308
-- name: Charlie Lebsack
-  avg: 77.93333333333334
+  Laronda Bartell: 80.625
+  Emeline Toy: 78.07692307692308
+  Charlie Lebsack: 77.93333333333334
 disqualifications:
 - Colin Maggio
 - Ms. Pansy Bosco
