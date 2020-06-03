@@ -9,7 +9,7 @@ with open("scores.yaml", 'r') as stream:
         print('Error with file load.', exc)
 
 
-# initialize qualifier dict
+# initialize temp variables
 qualifiers = {}
 disqualifications = []
 
@@ -30,19 +30,17 @@ for competitor in scores:
         qualifiers[competitor] = average
 
 # sort qualifiers from biggest to smallest and slice off top 3
-top3 = dict(sorted(qualifiers.items(),
-                   key=operator.itemgetter(1), reverse=True)[:3])
+top3scores = dict(sorted(qualifiers.items(),
+                         key=operator.itemgetter(1), reverse=True)[:3])
 
 # ---The steps below are for shaping the data into proper structure/format according to output spec.
 # initialize winners list
 winners = []
 
 # populate winners list from top3 dict
-for name in top3:
+for name in top3scores:
     # create dict for single winners name and avg score
-    winner = {}
-    winner['name'] = name
-    winner['avg'] = top3[name]
+    winner = dict(name=name, avg=top3scores[name])
 
     # add the winner to winners list
     winners.append(winner)

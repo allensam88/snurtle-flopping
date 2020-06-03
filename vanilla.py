@@ -1,5 +1,4 @@
 import yaml
-from collections import Counter
 
 # load yaml scores file
 with open("scores.yaml", 'r') as stream:
@@ -9,9 +8,10 @@ with open("scores.yaml", 'r') as stream:
         print('Error with file load.', exc)
 
 
-# initialize temp variables
-qualifiers = {}
+# initialize temp arrays
+winners = []
 disqualifications = []
+top3scores = []
 
 for competitor in scores:
     # disqualify the competitors with less than 7 flops
@@ -26,24 +26,32 @@ for competitor in scores:
         scores[competitor].remove(low)
         # calculate the average score
         average = sum(scores[competitor]) / len(scores[competitor])
-        # add to qualifier dictionary
-        qualifiers[competitor] = average
 
-# use 'Counter' built-in Python tool for finding the top 3 high scores in tuples
-top3scores = Counter(qualifiers).most_common(3)
+        # populate temp arry with first 3 items
+        if len(top3scores) < 3:
+            top3scores.append(average)
 
-# BREAK
-# ---The steps below are for shaping the data into proper structure/format according to output spec.
-# initialize winners list
-winners = []
+            # create dict for single winners name and avg score
+            winner = dict(name=competitor, avg=average)
 
-# populate winners list with top3 tuples
-for i in range(len(top3scores)):
-    # create dict for single winners name and avg score
-    winner = dict(name=top3scores[i][0], avg=top3scores[i][1])
+            # add the winner to winners list
+            winners.append(winner)
 
-    # add the winner to winners list
-    winners.append(winner)
+            # evaluate incoming items if average is bigger than lowest, then update top3scores
+        elif average > min(top3scores):
+            top3scores.append(average)
+            top3scores.remove(min(top3scores))
+
+            # remove the lowest name/score from winners list
+            winners = [i for i in winners if not (i['avg'] < min(top3scores))]
+
+            # create dict for single winners name and avg score
+            winner = dict(name=competitor, avg=average)
+
+            # add the winner to winners list
+            winners.append(winner)
+
+        winners = sorted(winners, key=lambda k: k['avg'], reverse=True)
 
 # BREAK
 # compile final winning results, with disqualifiers

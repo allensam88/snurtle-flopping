@@ -9,7 +9,7 @@ with open("scores.yaml", 'r') as stream:
         print('Error with file load.', exc)
 
 
-# initialize qualifier dict
+# initialize temp variables
 qualifiers = {}
 disqualifications = []
 
@@ -30,19 +30,17 @@ for competitor in scores:
         qualifiers[competitor] = average
 
 # utilize heapq tool 'nlargest' to get the top 3 qualifiers
-top3 = nlargest(3, qualifiers, key=qualifiers.get)
+top3scores = nlargest(3, qualifiers, key=qualifiers.get)
 
 # BREAK
 # ---The steps below are for shaping the data into proper structure/format according to output spec.
 # initialize winners list
 winners = []
 
-# populate winners list from top3 names
-for name in top3:
+# populate winners list from top3scores
+for name in top3scores:
     # create dict for single winners name and avg score
-    winner = {}
-    winner['name'] = name
-    winner['avg'] = qualifiers[name]
+    winner = dict(name=name, avg=qualifiers[name])
 
     # add the winner to winners list
     winners.append(winner)
