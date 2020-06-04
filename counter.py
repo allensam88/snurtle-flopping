@@ -20,12 +20,15 @@ for competitor in scores:
     # evaluate the qualifying competitors
     else:
         # eliminate the high / low scores
-        high = max(scores[competitor])
-        low = min(scores[competitor])
-        scores[competitor].remove(high)
-        scores[competitor].remove(low)
+        # built-in sort first, then slice off first and last as faster alternative
+        scores[competitor].sort()
+        trim = scores[competitor][1:-1]
+        # high = max(scores[competitor])
+        # low = min(scores[competitor])
+        # scores[competitor].remove(high)
+        # scores[competitor].remove(low)
         # calculate the average score
-        average = sum(scores[competitor]) / len(scores[competitor])
+        average = sum(trim) / len(trim)
         # add to qualifier dictionary
         qualifiers[competitor] = average
 
